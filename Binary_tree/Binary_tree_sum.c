@@ -51,14 +51,15 @@ int heightofbtree_norecrusion(struct btree *node);
 int findlevelsinbtree(struct btree *node);
 int findfullnodeinbtree(struct btree *node);
 int widenofbtree(struct btree *node);
-
-
+void inOrder(struct btree* root);
+int sumnode(struct btree *root, int *two);
 
 
 
 
 int main(){
     int max, height, level, full;
+    int two;
     struct btree *root;
     root = creat_tree(1);
     root->l = creat_tree(2);
@@ -67,10 +68,17 @@ int main(){
     root->l->r = creat_tree(5);
     root->r->l = creat_tree(6);
     root->r->r = creat_tree(7);
-    insertnodeinbtree(root, 8);
-    level = findlevelsinbtree(root);
-    full = findfullnodeinbtree(root);
-    printf("level = %d , full = %d \n", level, full);
+    root->l->l->l = creat_tree(8);
+    root->l->l->r = creat_tree(9);
+    root->l->r->l = creat_tree(10);
+    root->l->r->r = creat_tree(11);
+    root->r->l->l = creat_tree(12);
+    root->r->l->r = creat_tree(13);
+    root->r->r->l = creat_tree(14);
+    root->r->r->r = creat_tree(15);
+    sumnode(root, &two);
+    inOrder(root);
+    printf("\ntwo = %d", two);
 }
 
 
@@ -215,6 +223,26 @@ void preorderprint(struct btree *t){//先根后子树
     printf("%d ",t->data);
     preorderprint(t->l);
     preorderprint(t->r);
+}
+
+
+void inOrder(struct btree* root){
+     if (root == NULL) // or if (!root)
+          return;
+     
+     inOrder(root->l);  
+     printf("%d ", root->data);  
+     inOrder(root->r);
+} 
+
+
+int sumnode(struct btree *root, int *two){//统计二度节点
+    if(!NULL)
+        return 0;
+    two += sumnode(root->l, two);
+    two += sumnode(root->r, two);
+    if(!root->l && !root->r)
+        return two+1;
 }
 
 

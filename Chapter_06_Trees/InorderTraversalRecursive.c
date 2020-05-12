@@ -15,6 +15,19 @@ struct BinaryTreeNode{
     struct BinaryTreeNode *right;
 };
 
+struct BinaryTreeNode *createNewNode(int data){
+    struct BinaryTreeNode *node;
+    node = (struct BinaryTreeNode *)malloc(sizeof(struct BinaryTreeNode));
+    if(!node){
+        printf("Memory ERROR!\n");
+        return NULL;
+    }
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
 void inOrder(struct BinaryTreeNode* root){
      if (root == NULL) // or if (!root)
           return;
