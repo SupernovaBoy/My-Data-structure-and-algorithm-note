@@ -26,7 +26,7 @@ void printfgraph(struct graph *G);
 void printline(struct Vnode *temp);
 void creat_graph(struct graph *G);
 void insert(struct Vnode *V, struct Enode *E);
-int degree(struct graph *g, int vertex);
+void degree(struct graph *g, int vertex);
 int dequeue(struct queue *q);
 void enqueue(struct queue *q, int data);
 int isempty(struct queue *q);
@@ -42,11 +42,10 @@ void BFS_graph(struct graph *g);
 
 int main(){
     struct graph node;
-    int d;
     creat_graph(&node);
     printfgraph(&node);
-    d = degree(&node, 5);
-    printf("%d\n", d);
+    DFS_graph(&node);
+    BFS_graph(&node);
     return 0;
 }
 
@@ -96,7 +95,7 @@ void creat_graph(struct graph *G){
         G->v[i].firstnode = NULL;
     }
     printf("Please input Edges.\n");
-    printf("Example: (1,2) is the edge for 1 to 2.\n");
+    printf("Example: (1,2) is the edge from 1 to 2.\n");
     fflush(stdin);
     for(i=0; i<G->E; i++){
         scanf("(%d,%d)", &a, &b);
@@ -111,10 +110,6 @@ void creat_graph(struct graph *G){
 void printline(struct Vnode *temp){
     printf("\n\t%d", temp->value);
     struct Enode *edge =temp->firstnode;
-    if(edge == NULL){
-        printf("^\n");
-        return ;
-    }
     for(; edge !=NULL; edge = edge->next)
         printf("-->%d", edge->value);
     printf("^");
@@ -125,10 +120,11 @@ void printfgraph(struct graph *G){
     int i;
     for(i=0; i<G->V; i++)
         printline(&G->v[i]);
+    printf("\n");
 }
 
 
-int degree(struct graph *g, int vertex){
+void degree(struct graph *g, int vertex){
     int i, outdegree, indgree;
     struct Enode *temp = g->v[vertex].firstnode;
     for(outdegree = 0; temp != NULL; temp = temp->next)
@@ -137,13 +133,14 @@ int degree(struct graph *g, int vertex){
         for(temp=g->v[i].firstnode; temp!=NULL; temp=temp->next)
             if(temp->value == vertex)
                 indgree++;
-    return outdegree+indgree;
+    printf("\nThe vertex %d\'s degree is %d.\nOutdegree: %d Indegree: %d \n", vertex, outdegree+indgree, outdegree, indgree);
 }
 
 
 void DFS_graph(struct graph *g){
     int visit[max];
     int i;
+    printf("DFS: ");
     for(i=0; i<g->V; i++)
         visit[i] = 0;
     for(i=0; i<g->V; i++){
@@ -167,6 +164,7 @@ void DFS_one(struct graph *g, int v, int visit[]){
 void BFS_graph(struct graph *g){
     int visit[max];
     int i;
+    printf("BFS: ");
     for(i=0; i<g->V; i++)
         visit[i] = 0;
     for(i=0; i<g->V; i++){

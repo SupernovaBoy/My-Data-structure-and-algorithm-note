@@ -14,6 +14,9 @@ typedef struct Queue{
 
 graph *creat_graph();
 void init_queue(queue *Q);
+int isempty(queue *q);
+void enqueue(queue *q, int data);
+int dequeue(queue *q);
 void DFS_one(graph *g, int v, int visit[]);
 void DFS_graph(graph *g);
 void BFS_one(graph *g, int v, int visit[]);
@@ -25,7 +28,6 @@ int main(){
     graph *g;
     g = creat_graph();
     print_graph(g);
-    printf("\n");
     DFS_graph(g);
     BFS_graph(g);
     return 0;
@@ -68,7 +70,7 @@ graph *creat_graph(){
         for(j=0; j<G->E; j++)
             G->m[i][j] = 0;
     printf("Please input Edges.\n");
-    printf("Example: (1,2) is the edge for 1 to 2.\n");
+    printf("Example: (1,2) is the edge from 1 to 2.\n");
     fflush(stdin);
     for(k=0; k<G->E; k++){
         scanf("(%d,%d)", &i, &j);
@@ -81,6 +83,7 @@ graph *creat_graph(){
 void DFS_graph(graph *g){
     int visit[max];
     int i;
+    printf("DFS: ");
     for(i=0; i<g->V; i++)
         visit[i] = 0;
     for(i=0; i<g->V; i++){
@@ -103,6 +106,7 @@ void DFS_one(graph *g, int v, int visit[]){
 void BFS_graph(graph *g){
     int visit[max];
     int i;
+    printf("BFS: ");
     for(i=0; i<g->V; i++)
         visit[i] = 0;
     for(i=0; i<g->V; i++){
