@@ -30,19 +30,28 @@ void creatGraph(Linjiebiao *g){//创建邻接表
 	eNode *p;
 
 	printf("请输入结点数和边数：");
-	scanf("%d",&vNum);	scanf("%d",&eNum);
-	g->vNum=vNum; g->eNum=eNum;
-	for(i=0; i<vNum; i++){ g->v[i].v=i; g->v[i].firstNode=NULL;}
+	scanf("%d",&vNum);	
+	scanf("%d",&eNum);
+	g->vNum=vNum; 
+	g->eNum=eNum;
+	for(i=0; i<vNum; i++){ 
+		g->v[i].v=i; 
+		g->v[i].firstNode=NULL;
+	}
 	fflush(stdin);
 
 	printf("\n请输入边，如(1,2)表示从1发出一条边到2：\n");
 	for(i=0; i<eNum; i++){
 		scanf("(%d,%d)",&a,&b);
 		p=(eNode *)malloc(sizeof(eNode));
-		p->v=b;p->next=NULL; insertEdge(&(g->v[a]),p);
+		p->v=b;
+		p->next=NULL; 
+		insertEdge(&(g->v[a]),p);
         //加入下面两行语句，就是无向图的邻接表，即a到b有边，b到a也有边
-		p=(eNode *)malloc(sizeof(eNode));
-		p->v=a; p->next=NULL; insertEdge(&(g->v[b]),p);
+		// p=(eNode *)malloc(sizeof(eNode));
+		// p->v=a; 
+		// p->next=NULL; 
+		// insertEdge(&(g->v[b]),p);
 	}
 }
 void printLine(vNode *h){//打印邻接表中h为头的一行
